@@ -1,0 +1,9 @@
+just | 2019-07-30 18:16:36.974825 | 26 second(s) | PRETORIA
+just | 2019-07-30 18:24:28.259781 | 129 second(s) | BRATISLAVA
+just | 2019-07-30 18:27:26.937001 | 22 second(s) | TBILISI
+maciek | 2019-07-30 18:44:47.523519 | 9 second(s) | CARACAS
+maciek | 2019-07-30 18:46:05.540981 | 15 second(s) | BUENOS AIRES
+maciek | 2019-07-30 18:51:58.461167 | 18 second(s) | PRETORIA
+maciek | 2019-07-30 18:54:09.625669 | 13 second(s) | ROSEAU
+Maciek | 2019-07-30 20:24:55.633163 | 10 second(s) | BUENOS AIRES
+maciek | 2019-07-30 20:28:56.999968 | 4 second(s) | RIGA
