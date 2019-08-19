@@ -255,144 +255,144 @@ def move_figure(positions,figure_types,turn,start,is_check,rosh):
         is_check_mate=True
     else:
         is_check_mate=False
-    while error:
-        
-        if start=='list':
-            move_select=[]
-            for i in range(len(pickups)):
-                figure=figure_name(positions[pickups[i][0]][pickups[i][1]],figure_types)
-                up=''.join([string.ascii_uppercase[pickups[i][1]],str(pickups[i][0]+1)])
-                down=''.join([string.ascii_uppercase[putdowns[i][1]],str(putdowns[i][0]+1)])
-                move_select.append(' '.join([up,down]))
-                print(f'{i+1}- {figure} at {up} to {down}',end=' '*(15-len(figure)-len(str(i+1))))
-                if i%4==3:
-                    print()
-                
-            if roshades[0] and roshades[1]:
-                figure='Left roshade'
-                up=''.join([string.ascii_uppercase[roshades[0][1]],str(roshades[0][0]+1)])
-                down=''.join([string.ascii_uppercase[roshades[0][1]-2],str(roshades[0][0]+1)])
-                move_select.append(' '.join([up,down]))
-                print(f'{i+2}- {figure} at {up} to {down}')
-                i+=1
-                
-            if roshades[2] and roshades[3]:
-                figure='right roshade'
-                up=''.join([string.ascii_uppercase[roshades[2][1]],str(roshades[2][0]+1)])
-                down=''.join([string.ascii_uppercase[roshades[2][1]+2],str(roshades[2][0]+1)])
-                move_select.append(' '.join([up,down]))
-                print(f'{i+2}- {figure} at {up} to {down}')
-                         
-            # if len(checks_down)>0:
-            #     print('List of moves that result in check:')
-            #     for i in range(len(checks_down)):
-            #         figure=figure_name(positions[checks_up[i][0]][checks_up[i][1]],figure_types)
-            #         up=''.join([string.ascii_uppercase[checks_up[i][1]],str(checks_up[i][0]+1)])
-            #         down=''.join([string.ascii_uppercase[checks_down[i][1]],str(checks_down[i][0]+1)])
-            #         print(f'{i+1}- {figure} at {up} {down}',end=' '*(15-len(figure)-len(str(i))))
-            #         if i%5==0:
-            #             print()
-            ans=input(f'\nYou can either select a specific move (by number) or input coordinates: ')
-            if ans.isdigit():
-                if int(ans)-1 in range(len(move_select)):
-                    start=move_select[int(ans)-1]
-            else:
-                start=ans
+    the_move=''
+    if start=='list':
+        move_select=[]
+        for i in range(len(pickups)):
+            figure=figure_name(positions[pickups[i][0]][pickups[i][1]],figure_types)
+            up=''.join([string.ascii_uppercase[pickups[i][1]],str(pickups[i][0]+1)])
+            down=''.join([string.ascii_uppercase[putdowns[i][1]],str(putdowns[i][0]+1)])
+            move_select.append(' '.join([up,down]))
+            print(f'{i+1}- {figure} at {up} to {down}',end=' '*(15-len(figure)-len(str(i+1))))
+            if i%4==3:
+                print()
+            
         if roshades[0] and roshades[1]:
-            pickups.append(roshades[0])
-            putdowns.append(roshades[1]) 
-        if roshades[2]and roshades[3]:
-            pickups.append(roshades[2])
-            putdowns.append(roshades[3])
-        x=[]
-        y=[]
-        startxy=['0','0',' ','0','0']
-        if len(start)==2 or len(start)==5:
-            for i in range(len(start)):
-                startxy[i]=start[i]
-                if startxy[i].upper() in string.ascii_uppercase:
-                    x.append(string.ascii_uppercase.index(startxy[i].upper()))
-                elif startxy[i]==' ':
-                    continue
-                elif int(startxy[i])>0:
-                    y.append(int(startxy[i])-1)
-            print(start[0:2], '-> x=',x,'y=',y)
-        if len(x)+len(y)>1 and len(x)==len(y):
-            if [y[0],x[0]] in pickups:
-                error=False
-            else:
-                print('Bad selection!')
-        if start=='stop':
-            error=False
-            the_move=[turn,'quit']
-        elif error:
-            print('Wrong starting position!')
+            figure='Left roshade'
+            up=''.join([string.ascii_uppercase[roshades[0][1]],str(roshades[0][0]+1)])
+            down=''.join([string.ascii_uppercase[roshades[0][1]-2],str(roshades[0][0]+1)])
+            move_select.append(' '.join([up,down]))
+            print(f'{i+2}- {figure} at {up} to {down}')
+            i+=1
+            
+        if roshades[2] and roshades[3]:
+            figure='right roshade'
+            up=''.join([string.ascii_uppercase[roshades[2][1]],str(roshades[2][0]+1)])
+            down=''.join([string.ascii_uppercase[roshades[2][1]+2],str(roshades[2][0]+1)])
+            move_select.append(' '.join([up,down]))
+            print(f'{i+2}- {figure} at {up} to {down}')
+                        
+        # if len(checks_down)>0:
+        #     print('List of moves that result in check:')
+        #     for i in range(len(checks_down)):
+        #         figure=figure_name(positions[checks_up[i][0]][checks_up[i][1]],figure_types)
+        #         up=''.join([string.ascii_uppercase[checks_up[i][1]],str(checks_up[i][0]+1)])
+        #         down=''.join([string.ascii_uppercase[checks_down[i][1]],str(checks_down[i][0]+1)])
+        #         print(f'{i+1}- {figure} at {up} {down}',end=' '*(15-len(figure)-len(str(i))))
+        #         if i%5==0:
+        #             print()
+        ans=input(f'\nYou can either select a specific move (by number) or input coordinates: ')
+        if ans.isdigit():
+            if int(ans)-1 in range(len(move_select)):
+                start=move_select[int(ans)-1]
         else:
-            figure=figure_name(positions[y[0]][x[0]],figure_types)
-            if turn in figure:
-                moves_go=[]
-                for i in range(len(putdowns)):
-                    if [y[0],x[0]]==pickups[i]:
-                        moves_go.append(putdowns[i])
-                move_list=[]
-                if len(moves_go)>0:
-                    for go in moves_go:
-                        move_list.append(''.join([string.ascii_uppercase[go[1]],str(go[0]+1)]))
-                    if len(x)<2 and len(y)<2:
-                        print('Selected figure is ', figure, 'at the position', start)
-                        print('Available moves: ',move_list)
-                        move=input('put the coordinates where to move: ')
-                        if move.upper() in move_list:
-                            for i in range(2):
-                                if move[i].upper() in string.ascii_uppercase:
-                                    x.append(string.ascii_uppercase.index(move[i].upper()))
-                                elif int(move[i])>0:
-                                    y.append(int(move[i])-1)
-                            # print(move,'-> x=',x[1],'y=',y[1])
-                        else:
-                            print('wrong input!')
-                            error=True
-                else:
-                    print('Can\'t move that figure.')
-                    error=True
-            else:
-                print('Wrong selection!')
-                error=True
-            if len(x)+len(y)>2 and error==False:
-                if [y[1],x[1]] in putdowns:
-                    if positions[y[1]][x[1]]=='  ':
-                        eat=False
+            start=ans
+    if roshades[0] and roshades[1]:
+        pickups.append(roshades[0])
+        putdowns.append(roshades[1]) 
+    if roshades[2]and roshades[3]:
+        pickups.append(roshades[2])
+        putdowns.append(roshades[3])
+    x=[]
+    y=[]
+    startxy=['0','0',' ','0','0']
+    if len(start)==2 or len(start)==5:
+        for i in range(len(start)):
+            startxy[i]=start[i]
+            if startxy[i].upper() in string.ascii_uppercase:
+                x.append(string.ascii_uppercase.index(startxy[i].upper()))
+            elif startxy[i]==' ':
+                continue
+            elif int(startxy[i])>0:
+                y.append(int(startxy[i])-1)
+        print(start[0:2], '-> x=',x,'y=',y)
+    if len(x)+len(y)>1 and len(x)==len(y):
+        if [y[0],x[0]] in pickups:
+            error=False
+        else:
+            print('Bad selection!')
+    if start=='stop':
+        error=False
+        the_move=[turn,'quit']
+    elif error:
+        print('Wrong starting position!')
+    else:
+        figure=figure_name(positions[y[0]][x[0]],figure_types)
+        if turn in figure:
+            moves_go=[]
+            for i in range(len(putdowns)):
+                if [y[0],x[0]]==pickups[i]:
+                    moves_go.append(putdowns[i])
+            move_list=[]
+            if len(moves_go)>0:
+                for go in moves_go:
+                    move_list.append(''.join([string.ascii_uppercase[go[1]],str(go[0]+1)]))
+                if len(x)<2 and len(y)<2:
+                    print('Selected figure is ', figure, 'at the position', start)
+                    print('Available moves: ',move_list)
+                    move=input('put the coordinates where to move: ')
+                    if move.upper() in move_list:
+                        for i in range(2):
+                            if move[i].upper() in string.ascii_uppercase:
+                                x.append(string.ascii_uppercase.index(move[i].upper()))
+                            elif int(move[i])>0:
+                                y.append(int(move[i])-1)
+                        # print(move,'-> x=',x[1],'y=',y[1])
                     else:
-                        eat=positions[y[1]][x[1]]
-                    if rosh==False:
-                        if [y[0],x[0]]==krul:
-                            rosh=True
-                            if x[1]==x[0]-2:     # roshade left
-                                positions[y[0]][x[0]-1]=positions[y[0]][0]
-                                positions[y[0]][0]='  '
-                            elif x[1]==x[0]+2:   # roshade right
-                                positions[y[0]][x[0]+1]=positions[y[0]][t]
-                                positions[y[0]][t]='  '
-                    
-                    positions[y[1]][x[1]]=positions[y[0]][x[0]]
-                    positions[y[0]][x[0]]='  '
-                    endxy=''.join([string.ascii_uppercase[x[1]],str(y[1]+1)])
-                    the_move=[positions[y[1]][x[1]],''.join(startxy[0:2]),endxy]
-                    print('moving the', figure, 'from position', start[0:2].upper(), 'to position',endxy)
+                        print('wrong input!')
+                        error=True
+            else:
+                print('Can\'t move that figure.')
+                error=True
+        else:
+            print('Wrong selection!')
+            error=True
+        if len(x)+len(y)>2 and error==False:
+            if [y[1],x[1]] in putdowns:
+                if positions[y[1]][x[1]]=='  ':
+                    eat=False
                 else:
-                    print('Wrong move! Try again.')
-                    error=True
-    if turn=='white':
-        turn='black'
-    elif turn=='black':
-        turn='white'
+                    eat=positions[y[1]][x[1]]
+                if rosh==False:
+                    if [y[0],x[0]]==krul:
+                        rosh=True
+                        if x[1]==x[0]-2:     # roshade left
+                            positions[y[0]][x[0]-1]=positions[y[0]][0]
+                            positions[y[0]][0]='  '
+                        elif x[1]==x[0]+2:   # roshade right
+                            positions[y[0]][x[0]+1]=positions[y[0]][t]
+                            positions[y[0]][t]='  '
+                
+                positions[y[1]][x[1]]=positions[y[0]][x[0]]
+                positions[y[0]][x[0]]='  '
+                endxy=''.join([string.ascii_uppercase[x[1]],str(y[1]+1)])
+                the_move=[positions[y[1]][x[1]],''.join(startxy[0:2]).upper(),endxy]
+                print('moving the', figure, 'from position', start[0:2].upper(), 'to position',endxy)
+            else:
+                print('Wrong move! Try again.')
+                error=True
+    if error==False:
+        if turn=='white':
+            turn='black'
+        elif turn=='black':
+            turn='white'
     return positions,turn,is_check_mate,the_move,eat,rosh
 
 def undo_move(positions,move_history):
-    last_move=move_history[-1]
-    print(last_move)
-    up,xy0,xy1,down=last_move.split(' ')
-    print(up,xy0,xy1,down)
+    import string
+    up,xy0,xy1,down=move_history[-1]
+    print('Moving back:',up,xy0,xy1,down)
+    
 
 
     
@@ -478,9 +478,10 @@ while move!='stop':
                 print('Warning. There was no figure taken down in',counter,'moves!')
                 print('If no figure is taken in 50 moves, the game ends in a draw.')
                 moving.append(str(counter))
-            else:
+            elif moving:
                 moving.append('  ')
-        move_history.append(moving)
+        if moving:
+            move_history.append(moving)
 
     if 'quit' in moving:
         move='stop'
